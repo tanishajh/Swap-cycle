@@ -5,16 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Swap Cycle</title>
     <link rel="stylesheet" href="style.css" />
+    <style>
+      /* Add styles for the Back to Home button */
+      .back-to-home-button {
+        background-color: #1e90ff;
+        color: white;
+        padding: 0.7rem 1.5rem;
+        border: none;
+        border-radius: 6px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.3s ease;
+        margin-top: 1rem; /* Add some space above the button */
+      }
+
+      .back-to-home-button:hover {
+        background-color: #1c7ed6;
+        transform: translateY(-3px);
+      }
+
+      .back-to-home-button:focus {
+        outline: none;
+      }
+    </style>
   </head>
   <body>
     <header>
       <h1>Swap Cycle</h1>
       <div class="nav-buttons">
-        <button onclick="handleLogin()">Login</button>
+        <button onclick="toggleLogin()">Login</button>
       </div>
     </header>
 
-    <section class="hero">
+    <!-- Login Form -->
+    <div id="login-section" class="login-container" style="display: none">
+      <h3>Login to Swap Cycle</h3>
+      <input type="text" id="username" placeholder="Username" />
+      <input type="password" id="password" placeholder="Password" />
+      <button onclick="handleLogin()">Submit</button>
+    </div>
+
+    <!-- Public Content -->
+    <section class="hero" id="hero-section">
       <h2>Sustainable Fashion That Pays You Back</h2>
       <p>
         Declutter your wardrobe, earn cash or credits, and be part of a stylish,
@@ -45,16 +77,71 @@
     <section class="cta">
       <h3>Join the Fashion Revolution</h3>
       <p>Be part of the movement. Dress sustainably. Live responsibly.</p>
-      <button onclick="alert('Thanks for joining Swap Cycle!')">
-        Get Started
-      </button>
+      <button>Get Started</button>
+    </section>
+
+    <!-- Member-Only Content -->
+    <section id="member-section" class="section" style="display: none">
+      <h3>Welcome, <span id="user-name"></span>!</h3>
+      <p>This section is for members only. Thanks for logging in.</p>
+
+      <div class="members-content">
+        <div class="dashboard-card">
+          <h4>Your Dashboard</h4>
+          <ul>
+            <li>🌟 You have <strong>3 swap credits</strong></li>
+            <li>👕 Listed Items: <strong>5</strong></li>
+            <li>💬 Messages: <strong>2 unread</strong></li>
+          </ul>
+        </div>
+
+        <div class="exclusive-offers">
+          <h4>Exclusive Member Offers</h4>
+          <p>
+            🔥 Get 20% bonus credits on your next item listed before Friday!
+          </p>
+          <p>🎁 Refer a friend and earn 1 extra swap credit!</p>
+        </div>
+
+        <div class="tips">
+          <h4>Swapping Tips</h4>
+          <p>✔️ Use clear photos for faster swaps.</p>
+          <p>✔️ Bundle items for better offers.</p>
+        </div>
+
+        <!-- Add the Back to Home button -->
+        <button class="back-to-home-button" onclick="goBackToHome()">
+          Back to Home
+        </button>
+      </div>
     </section>
 
     <footer>&copy; 2025 Swap Cycle. All rights reserved.</footer>
 
     <script>
+      function toggleLogin() {
+        const loginSection = document.getElementById("login-section");
+        loginSection.style.display =
+          loginSection.style.display === "none" ? "block" : "none";
+      }
+
       function handleLogin() {
-        alert("Logged In!");
+        const username = document.getElementById("username").value.trim();
+        const password = document.getElementById("password").value.trim();
+
+        if (username && password) {
+          document.getElementById("login-section").style.display = "none";
+          document.getElementById("hero-section").style.display = "none";
+          document.getElementById("member-section").style.display = "block";
+          document.getElementById("user-name").innerText = username;
+        } else {
+          alert("Please enter both username and password.");
+        }
+      }
+
+      // Function to redirect back to the home page
+      function goBackToHome() {
+        window.location.href = "index.html"; // Replace with your actual home page URL
       }
     </script>
   </body>
